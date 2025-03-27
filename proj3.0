@@ -98,7 +98,19 @@ int main() {
                 }
             }
         }
+        #define MAX_PRODUTOS 100
+ cad_prod produtos[MAX_PRODUTOS];
+ 
+    int numProdutos;
 
+    printf("Digite o numero de produtos a serem lidos: ");
+    if (scanf("%d", &numProdutos) != 1 || numProdutos > MAX_PRODUTOS || numProdutos <= 0) {
+        printf("Número invalido de produtos!\n");
+        return 1;
+    }
+
+    preencheVetor(produtos, numProdutos);
+    exibirProdutos(produtos, numProdutos);
         if (x == 3) {
             // Chama a função para preencher os produtos a partir do arquivo
             preencheVetor(produtos, 10);
