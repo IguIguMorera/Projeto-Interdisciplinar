@@ -2,60 +2,72 @@
 para o projeto interdisciplinar;
 */
 
-
+#include <stdio.h>
 #include <iostream>
 #include <string>
+using namespace std;
 
-struct Produto {
-    char nome[15];
-    float wats;
-    float tempo;
+struct cad_prod {
+    int id_prod;
+    string nome;
+    float watts;
 };
 
-int main(int argc, char** argv) {
-    float x = 0;
-    int n;
-    Produto produtos[10];  
-    int contador = 0;  
+struct cal {
+    float tempo;
+    float dias;
+    float kwh;
+};
 
-
-
+int main() {
+    int x = 0;
+    int contador = 0;
+    cad_prod produtos[10];
+    cal tempos[10];
 
     while (x != 5) {
-
-        std::cout << "menu: \n";
-        std::cout << "1- cadastrar produto\n";
-        std::cout << "2- ver produtos\n";
-        std::cout << "5- sair\n";
-        std::cout << "\n";
-        std::cin >> x;
+        cout << "Menu:\n";
+        cout << "1- Cadastrar produto\n";
+        cout << "2- Ver produtos\n";
+        cout << "5- Sair\n";
+        cin >> x;
 
         if (x == 1) {
-            if (contador < 10) {  // Verifica se h· espaÁo para mais produtos
-                std::cout << "Nome do produto: \n";
-                std::cin >> produtos[contador].nome;
-                std::cout << "Wats do produto: \n";
-                std::cin >> produtos[contador].wats;
-                std::cout << "Tempo do produto: \n";
-                std::cin >> produtos[contador].tempo;
+            if (contador < 10) {
+                cout << "ID do produto: ";
+                cin >> produtos[contador].id_prod;
+                cin.ignore(); // Evita problemas ao ler strings ap√≥s n√∫meros
+                cout << "Nome do produto: ";
+                getline(cin, produtos[contador].nome);
+                cout << "Watts do produto: ";
+                cin >> produtos[contador].watts;
+                cout << "Tempo de uso por dia (horas): ";
+                cin >> tempos[contador].tempo;
+                cout << "Dias usando o produto: ";
+                cin >> tempos[contador].dias;
 
-                std::cout << "\nProduto cadastrado com sucesso!\n";
-                contador++;  // Incrementa o contador de produtos cadastrados
+                // C√°lculo do consumo
+                tempos[contador].kwh = (produtos[contador].watts * tempos[contador].tempo * tempos[contador].dias) / 1000.0;
+
+                cout << "\nProduto cadastrado com sucesso!\n";
+                contador++;
             } else {
-                std::cout << "Limite de produtos cadastrados atingido!\n";
+                cout << "Limite de produtos cadastrados atingido!\n";
             }
         }
 
         if (x == 2) {
             if (contador == 0) {
-                std::cout << "Nenhum produto cadastrado.\n";
+                cout << "Nenhum produto cadastrado.\n";
             } else {
-                std::cout << "Produtos cadastrados: \n";
+                cout << "Produtos cadastrados:\n";
                 for (int i = 0; i < contador; i++) {
-                    std::cout << "\nProduto " << i + 1 << ":\n";
-                    std::cout << "Nome: " << produtos[i].nome << "\n";
-                    std::cout << "Wats: " << produtos[i].wats << " W\n";
-                    std::cout << "Tempo: " << produtos[i].tempo << " minutos\n";
+                    cout << "ID: " << produtos[i].id_prod << "\n";
+                    cout << "Nome: " << produtos[i].nome << "\n";
+                    cout << "Watts: " << produtos[i].watts << " W\n";
+                    cout << "Tempo de uso por dia: " << tempos[i].tempo << " horas\n";
+                    cout << "Dias: " << tempos[i].dias << " dias\n";
+                    cout << "Consumo: " << tempos[i].kwh << " kWh\n";
                 }
             }
         }
